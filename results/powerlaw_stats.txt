@@ -1,0 +1,3 @@
+Brown corpus: alpha=1.571, gamma=1.750, C=69971
+news genre: alpha=1.696, gamma=1.437, C=6386
+romance genre: alpha=1.714, gamma=1.401, C=3899

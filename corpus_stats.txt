@@ -1,0 +1,24 @@
+
+=== Brown corpus ===
+tokens: 1161192
+types: 49815
+words: 981716
+avg_words_per_sentence: 17.37
+avg_word_length: 4.68
+lemmas: 34998
+
+=== news genre ===
+tokens: 100554
+types: 13112
+words: 83562
+avg_words_per_sentence: 19.49
+avg_word_length: 4.81
+lemmas: 9935
+
+=== romance genre ===
+tokens: 70022
+types: 7883
+words: 56857
+avg_words_per_sentence: 11.99
+avg_word_length: 4.23
+lemmas: 6739
