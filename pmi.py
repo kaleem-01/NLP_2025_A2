@@ -1,17 +1,3 @@
-"""pmi.py – Extended for PMI & PPMI on Brown and brown100
-========================================================================
-Run directly (python pmi.py) or paste the cell blocks into a Jupyter
-notebook.  Requires **NLTK ≥ 3.8** with the Brown corpus downloaded.
-
-  * Step-1 logic retained (PMI on Brown, ≥10-freq cutoff, top/bottom 20)
-  * Step-3 extension
-        • Computes *both* PMI and **Positive PMI (PPMI)**
-        • Runs on **full Brown** *and* a subset we call **brown100**
-          (first 100 sentences of Brown – matches many course kits)
-        • Prints neatly formatted summaries
-        • Adds inline observations & discussion
-
-=========================================================================="""
 import math
 from collections import Counter
 from itertools import islice, chain
@@ -29,7 +15,7 @@ def pmi_value(pair_cnt: int, w1_cnt: int, w2_cnt: int, N: int) -> float:
 
 def build_counters(tokens: Iterable[str], cutoff: int = 10) -> Tuple[int, Dict[str, int], Dict[Tuple[str, str], int]]:
     """Return corpus size + unigram/bigram counts after cutoff filter."""
-    tokens = [t.lower() for t in tokens]
+    tokens = [t.lower() for t in tokens if t.isalpha()]
     N = len(tokens)
 
     unigrams = Counter(tokens)
@@ -98,6 +84,88 @@ for name, toks in corpora.items():
     # PPMI      – only meaningful positives, so just top 20
     show_top(ppmi_dict, 20, reverse=True)
 
+# ---------------------------------------------------------------------
+
+
+"""
+Tokens (after lowercase): 1,921
+Distinct words ≥10: 736
+Valid bigrams: 85
+
+Top 20 (PMI) pairs
+-----------------------------------
+fulton          county             4.005
+jury            said               3.572
+there           was                3.371
+will            be                 3.263
+said            there              3.083
+election        was                2.724
+which           has                2.693
+by              fulton             2.619
+on              fulton             2.619
+county          has                2.550
+said            it                 2.537
+that            there              2.524
+as              his                2.511
+as              state              2.511
+his             election           2.437
+it              was                2.419
+it              has                2.314
+county          which              2.288
+that            will               2.282
+the             jury               2.185
+
+Bottom 20 (PMI) pairs
+-----------------------------------
+said            the               -0.667
+be              the               -0.534
+it              the               -0.434
+was             the               -0.380
+county          the               -0.197
+election        the               -0.128
+to              the               -0.110
+as              the               -0.054
+of              a                  0.060
+and             in                 0.183
+and             the                0.208
+by              the                0.208
+said            a                  0.394
+the             county             0.496
+to              be                 0.509
+for             the                0.518
+and             a                  0.576
+it              to                 0.609
+was             a                  0.681
+said            in                 0.694
+
+Top 20 (PPMI) pairs
+-----------------------------------
+fulton          county             4.005
+jury            said               3.572
+there           was                3.371
+will            be                 3.263
+said            there              3.083
+election        was                2.724
+which           has                2.693
+by              fulton             2.619
+on              fulton             2.619
+county          has                2.550
+said            it                 2.537
+that            there              2.524
+as              his                2.511
+as              state              2.511
+his             election           2.437
+it              was                2.419
+it              has                2.314
+county          which              2.288
+that            will               2.282
+the             jury               2.185
+
+"""
+
+
+
+
 """
 • PMI results: very high positive values still dominated by fixed expressions
   (e.g., "united nations", "new york").  Negative extremes tend to combine a
@@ -112,4 +180,3 @@ for name, toks in corpora.items():
 • brown100 is too small for stable PMI (few bigrams survive the cutoff); its
   top collocations are still interpretable but more sensitive to noise.
 """
-# ---------------------------------------------------------------------
