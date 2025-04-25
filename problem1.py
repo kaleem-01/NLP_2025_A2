@@ -1,45 +1,4 @@
 
-"""
-problem1_all.py
-===============
-
-Comprehensive solution for A2.1 Text Processing & Zipf’s Law
-
-Features
---------
-* Loads Brown corpus (NLTK).
-* Computes:
-    1. Unique‑word frequency lists (corpus + two genres).
-    2. Corpus statistics (tokens, types, words, etc.).
-    3. Ten most frequent POS tags (full corpus).
-* Plots:
-    • Linear rank‑frequency curve.
-    • Log–log rank‑frequency curve.
-    • Log–log curve **with power‑law fit** (using `powerlaw` library).
-* Saves:
-    - linear_plot.png
-    - loglog_plot.png
-    - rankloglog_powerlaw.png
-    - corpus_stats.txt   (pretty table of all statistics)
-    - pos_top10.txt      (tag → freq)
-    - powerlaw_stats.txt (α, γ, C for each dataset)
-
-Edit the `GENRES` tuple to choose any two Brown genres.
-
-Requirements
-------------
-```
-pip install nltk powerlaw matplotlib
-```
-(The script auto‑downloads required NLTK data at first run.)
-
-Run
----
-```
-python problem1_all.py
-```
-"""
-
 import nltk
 from nltk.corpus import brown
 from nltk import pos_tag, sent_tokenize, WordNetLemmatizer
@@ -50,10 +9,8 @@ import powerlaw
 import os
 import textwrap
 
-# ----------------------- CONFIGURATION --------------------------------
 GENRES = ('news', 'romance')   # choose any two Brown genres
 TOP_RANK = 20000               # ranks to display on plots
-# ----------------------------------------------------------------------
 
 # Ensure resources
 for pkg in ('brown', 'punkt', 'averaged_perceptron_tagger',
@@ -136,6 +93,7 @@ def plot_rank_curves(datasets, labels):
     plt.legend()
     plt.tight_layout()
     plt.savefig('resultsloglog_plot.png', dpi=300)
+    # plt.show()
 
 def plot_rank_with_powerlaw(datasets, labels, top_rank=TOP_RANK):
     plt.figure()
@@ -158,6 +116,7 @@ def plot_rank_with_powerlaw(datasets, labels, top_rank=TOP_RANK):
     plt.legend()
     plt.tight_layout()
     plt.savefig('results/rankloglog_powerlaw.png', dpi=300)
+    # plt.show()
 
     with open('results/powerlaw_stats.txt', 'w') as f:
         f.write('\n'.join(stats_lines))
